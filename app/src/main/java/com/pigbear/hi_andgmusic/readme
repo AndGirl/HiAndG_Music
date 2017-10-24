@@ -1,0 +1,15 @@
+1.common:通常用来存放utils，第三方，constant,config
+data：model
+presenter:
+ui
+
+2.gradle的基本配置
+android studio2.0提供了一种instant run
+构建编译项目
+    1.使用deamon：在gradle.properties,加上一句org.gradle.daemon=true;
+    2.依赖库使用固定版本
+    3.
+
+3.fragment的预加载问题
+viewPager + fragment的预加载问题
+问题：滑动过程中，数据加载不出来，又或者延迟加载

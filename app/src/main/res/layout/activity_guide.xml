@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_guide"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pigbear.hi_andgmusic.ui.guide.GuideActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/y150"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv1"
+            android:layout_width="@dimen/x10"
+            android:layout_height="@dimen/y10"
+            android:src="@mipmap/dot_focus" />
+
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="@dimen/x10"
+            android:layout_height="@dimen/y10"
+            android:layout_marginLeft="@dimen/x10"
+            android:src="@mipmap/dot_normal" />
+
+        <ImageView
+            android:id="@+id/iv3"
+            android:layout_width="@dimen/x10"
+            android:layout_height="@dimen/y10"
+            android:layout_marginLeft="@dimen/x10"
+            android:src="@mipmap/dot_normal" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_start"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/y50"
+        android:background="@drawable/bt_start"
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        android:layout_width="@dimen/x400"
+        android:layout_height="@dimen/y75" />
+
+</RelativeLayout>

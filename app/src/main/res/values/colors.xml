@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- notification text -->
+    <color name="bottom_text">#c1c0c0</color>
+    <color name="notification_bak">#47fafafa</color>
+    <color name="primary_material_light_1">#3f51b5</color>
+    <color name="background_material_light_1">#fafafa</color>
+    <color name="background_material_light_2">#ed02fafa</color>
+    <color name="small_font">#FF757575</color>
+    <color name="text_color">#FF000000</color>
+    <color name="widget_background_color">#a0000000</color>
+
+    <color name="theme_color_primary">#d20000</color>
+    <color name="theme_color_primary_dark">#b85671</color>
+    <color name="theme_color_primary_trans">#99f0486c</color>
+
+    <color name="playbarProgressColor">@color/themeColor</color>
+    <color name="themeColor">#ffce3d3a</color>
+    <color name="normalBackground">#fff2f4f5</color>
+
+    <color name="white">#ffffff</color>
+    <color name="white_normal">#DEFFFFFF</color>
+    <color name="black_normal">#DE000000</color>
+    <color name="lineColor">#19000000</color>
+    <color name="bottomSheetNormalBackground">#f9ffffff</color>
+    <color name="grey_alpha">#8Acccccc</color>
+    <color name="black_alpha">#8A000000</color>
+    <color name="white_text">#fafafa</color>
+    <color name="test_color">#696969</color>
+    <color name="theme_color_PrimaryAccent">#ffce3d3e</color>
+
+</resources>
