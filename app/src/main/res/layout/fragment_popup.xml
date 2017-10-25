@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/more_frament"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/pop_list_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/y20"
+            android:paddingLeft="@dimen/x35"
+            android:paddingTop="@dimen/y20"
+            android:text="歌曲："
+            android:textSize="14sp" />
+
+        <include
+            layout="@layout/split_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y2" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pop_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fadeScrollbars="true" />
+    </LinearLayout>
+</FrameLayout>

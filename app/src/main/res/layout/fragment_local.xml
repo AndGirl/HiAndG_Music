@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.pigbear.hi_andgmusic.ui.local.LocalFragment">
 
     <ScrollView
@@ -22,7 +23,6 @@
                 android:background="@color/white_normal"
                 android:clickable="true"
                 android:layout_gravity="center_vertical"
-
                 android:foreground="?attr/selectableItemBackground"
                 android:orientation="horizontal">
 
@@ -198,6 +198,13 @@
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/recycler_collection_listitem">
                 </android.support.v7.widget.RecyclerView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y120"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/white" />
+
             </LinearLayout>
 
             <!--<include-->

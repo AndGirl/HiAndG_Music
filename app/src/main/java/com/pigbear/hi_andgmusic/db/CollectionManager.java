@@ -32,10 +32,10 @@ public class CollectionManager {
     private CollectionShipDao collectionShipDao;
     private List<CollectionBean> collectionList;
 
-    public static CollectionManager getInstance(){
-        if(instance == null) {
-            synchronized (CollectionManager.class){
-                if(instance == null) {
+    public static CollectionManager getInstance() {
+        if (instance == null) {
+            synchronized (CollectionManager.class) {
+                if (instance == null) {
                     instance = new CollectionManager();
                 }
             }
@@ -43,7 +43,7 @@ public class CollectionManager {
         return instance;
     }
 
-    public CollectionManager(){
+    public CollectionManager() {
         collectionDao = new CollectionDao();
         collectionShipDao = new CollectionShipDao();
         getAllCollectionsFromDao();
@@ -114,6 +114,11 @@ public class CollectionManager {
         }
     }
 
+    public void setCollection(CollectionBean bean, int position) {
+        collectionDao.updateCollection(bean);
+        getAllCollections().set(position, bean);
+    }
+
     public CollectionBean getCollectionById(int id) {
         for (CollectionBean bean : getAllCollections()) {
             if (bean.getId() == id) {
@@ -125,9 +130,10 @@ public class CollectionManager {
 
     /**
      * 删除收藏夹
+     *
      * @param bean
      */
-    public void deleteCollection(CollectionBean bean){
+    public void deleteCollection(CollectionBean bean) {
         Observable.just(bean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -137,9 +143,9 @@ public class CollectionManager {
                         int index = containCollection(collectionBean);
                         collectionDao.deleteCollection(collectionBean);
                         List<CollectionShipBean> shipBeen = getCollectionShipList(collectionBean.getId());
-                        for (CollectionShipBean bean : shipBeen){
+                        for (CollectionShipBean bean : shipBeen) {
                             Song song = SongManager.getInstance().querySong(bean.getSid());
-                            if(song != null && song.getDownload() == Song.DOWNLOAD_NONE){
+                            if (song != null && song.getDownload() == Song.DOWNLOAD_NONE) {
                                 SongManager.getInstance().deleteSong(song);
                             }
                             deleteCollectionShip(bean);
@@ -168,7 +174,7 @@ public class CollectionManager {
      *
      * @param bean 收藏夹实例
      */
-    public void setCollectionAsync(final CollectionBean bean){
+    public void setCollectionAsync(final CollectionBean bean) {
         Observable.just(bean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -235,12 +241,12 @@ public class CollectionManager {
      * @return
      */
     public long insertCollectionShip(CollectionBean bean, Song song) {
-        if(SongManager.getInstance().querySong(song.getId())==null){
+        if (SongManager.getInstance().querySong(song.getId()) == null) {
             SongManager.getInstance().insertOrUpdateSong(song);
         }
         CollectionShipBean collectionShipBean = new CollectionShipBean(-1, bean.getId(), (int) song.getId());
         long index = collectionShipDao.insertCollectionShip(collectionShipBean);
-        if(index > 0){
+        if (index > 0) {
             bean.setCount(bean.getCount() + 1);
             setCollection(bean);
         }

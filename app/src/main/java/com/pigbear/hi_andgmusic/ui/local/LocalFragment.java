@@ -5,13 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pigbear.hi_andgmusic.R;
+import com.pigbear.hi_andgmusic.data.CollectionBean;
+import com.pigbear.hi_andgmusic.ui.adapter.CollectionAdapter;
+import com.pigbear.hi_andgmusic.ui.adapter.OnItemClickListener;
 import com.pigbear.hi_andgmusic.ui.collections.CollectionCreateActivity;
+import com.pigbear.hi_andgmusic.ui.collections.PopupFragment;
 import com.pigbear.hi_andgmusic.ui.music.activity.LocalMusicActivity;
 import com.pigbear.hi_andgmusic.ui.music.activity.RecentPlayListActivity;
 
@@ -24,9 +30,16 @@ import butterknife.OnClick;
  */
 public class LocalFragment extends Fragment {
 
-
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
+    private CollectionAdapter collectionAdapter;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("TAG", "Fragment + onResume()");
+        collectionAdapter.update();
+    }
 
     public LocalFragment() {
         // Required empty public constructor
@@ -43,7 +56,36 @@ public class LocalFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_local, container, false);
         ButterKnife.bind(this, view);
+
+        initRecyclerView();
+
         return view;
+    }
+
+    /**
+     * 初始化recyclerView及其adapter
+     */
+    private void initRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        collectionAdapter = new CollectionAdapter(getActivity());
+        recyclerView.setAdapter(collectionAdapter);
+        collectionAdapter.setItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(Object item, int position) {
+
+            }
+
+            @Override
+            public void onItemSettingClick(View v, Object item, int position) {
+                if(item instanceof CollectionBean) {
+                    PopupFragment popupFragment = PopupFragment.newInstance((CollectionBean) item, collectionAdapter);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("position",position);
+                    popupFragment.setArguments(bundle);
+                    popupFragment.show(getFragmentManager(),"pupupFragment");
+                }
+            }
+        });
     }
 
     @Override
@@ -66,7 +108,9 @@ public class LocalFragment extends Fragment {
             case R.id.artist_layout:
                 break;
             case R.id.add:
-                startActivity(new Intent(getActivity(), CollectionCreateActivity.class));
+                Intent intent = new Intent(getActivity(), CollectionCreateActivity.class);
+                intent.putExtra("cid", -1);
+                startActivity(intent);
                 break;
         }
     }

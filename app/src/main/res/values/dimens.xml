@@ -3,4 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="icon_size">@dimen/x80</dimen>
+    <dimen name="line_length">@dimen/x12</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="line_length_half">@dimen/x8</dimen>
+    <dimen name="text_caption">12sp</dimen>
 </resources>

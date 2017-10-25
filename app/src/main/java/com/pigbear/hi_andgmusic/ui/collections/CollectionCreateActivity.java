@@ -53,6 +53,7 @@ public class CollectionCreateActivity extends AppCompatActivity {
     private CollectionBean collectionBean;
     private boolean hasChange;
     private int cid;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class CollectionCreateActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.actionbar_back);
         if(getIntent() != null) {
             cid = getIntent().getIntExtra("cid",-1);
+            position = getIntent().getIntExtra("position", -2);
             if(cid == -1) {
                 actionBar.setTitle(R.string.collection_create_title);
             }
@@ -138,7 +140,7 @@ public class CollectionCreateActivity extends AppCompatActivity {
             case R.id.collection_title:
                 new MaterialDialog.Builder(this)
                         .title(R.string.collection_dialog_name)
-                        .inputRangeRes(2, 20, R.color.theme_color_PrimaryAccent)
+                        .inputRangeRes(1, 20, R.color.theme_color_PrimaryAccent)
                         .inputType(InputType.TYPE_CLASS_TEXT)
                         .input(collectionBean.getTitle(), "", new MaterialDialog.InputCallback() {
                             @Override
@@ -213,7 +215,11 @@ public class CollectionCreateActivity extends AppCompatActivity {
             return true;
         }
         if(item.getItemId() == R.id.action_store) {
-            CollectionManager.getInstance().setCollection(collectionBean);
+            if(position == -2) {
+                CollectionManager.getInstance().setCollection(collectionBean);
+            }else{
+                CollectionManager.getInstance().setCollection(collectionBean,position);
+            }
             finish();
         }
         return super.onOptionsItemSelected(item);
