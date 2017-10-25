@@ -17,6 +17,7 @@ import com.pigbear.hi_andgmusic.data.CollectionBean;
 import com.pigbear.hi_andgmusic.ui.adapter.CollectionAdapter;
 import com.pigbear.hi_andgmusic.ui.adapter.OnItemClickListener;
 import com.pigbear.hi_andgmusic.ui.collections.CollectionCreateActivity;
+import com.pigbear.hi_andgmusic.ui.collections.CollectionPlayActivity;
 import com.pigbear.hi_andgmusic.ui.collections.PopupFragment;
 import com.pigbear.hi_andgmusic.ui.music.activity.LocalMusicActivity;
 import com.pigbear.hi_andgmusic.ui.music.activity.RecentPlayListActivity;
@@ -34,6 +35,7 @@ public class LocalFragment extends Fragment {
     RecyclerView recyclerView;
     private CollectionAdapter collectionAdapter;
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -49,6 +51,7 @@ public class LocalFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +75,11 @@ public class LocalFragment extends Fragment {
         collectionAdapter.setItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Object item, int position) {
-
+                if(item instanceof CollectionBean) {
+                    Intent intent = new Intent(getActivity(), CollectionPlayActivity.class);
+                    intent.putExtra("collection",(CollectionBean)item);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -113,5 +120,11 @@ public class LocalFragment extends Fragment {
                 startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

@@ -81,7 +81,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Co
         if(collectionBean.getId() == -1) {
             holder.setting.setVisibility(View.GONE);
             holder.count.setVisibility(View.GONE);
-            holder.title.setText(R.string.myfavor);
+            holder.title.setText(R.string.collection_create);
             holder.cover.setImageResource(R.drawable.ah1);
             holder.collectLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

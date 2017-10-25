@@ -1,14 +1,21 @@
-<resources>
-    <string name="app_name">Hi_AndGMusic</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">HiAndGMusic</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="myfavor">我喜欢的音乐</string>
+    <string name="duration_format" translatable="false">
+        <xliff:g id="hours">%1$s</xliff:g>
+        <xliff:g id="minutes">%2$s</xliff:g>
+    </string>
+    <string name="durationformatshort" translatable="false">
+        <xliff:g id="format">%2$d:%3$02d</xliff:g>
+    </string>
+    <string name="durationformatlong" translatable="false">
+        <xliff:g id="format">%1$d:%2$02d:%3$02d</xliff:g>
+    </string>
+    <string name="music_unknown">unknown</string>
 
-    <string name="song">%1$d首</string>
-    <string name="menu_collection_edit">编辑收藏夹信息</string>
-    <string name="menu_collection_delete">删除收藏夹</string>
+    <string name="music_playing_none">当前无歌曲在播放</string>
     <string name="local_music">本地音乐</string>
     <string name="recent_play">最近播放</string>
     <string name="local_manage">下载管理</string>
@@ -16,8 +23,52 @@
     <string name="created_playlists">创建的歌单</string>
     <string name="my_fav_playlist">我喜欢的音乐</string>
     <string name="shared_to">分享到</string>
-    <string name="music_playing_none">当前没有音乐</string>
-    <string name="music_unknown">unknown</string>
+
+    <!--################## 音乐专辑分类 ####################-->
+    <string name="album">专辑</string>
+    <string name="album_new_title">新曲速递</string>
+    <string name="album_new_subtitle">NEW ALBUM</string>
+    <string name="album_hot_title">音乐热榜</string>
+    <string name="album_hot_subtitle">HOT ALBUM</string>
+
+    <!--################## 音乐电台分类 ####################-->
+    <string name="radio">电台</string>
+    <string name="radio_new_title">最新电台</string>
+    <string name="radio_new_subtitle">NEW RADIO</string>
+    <string name="radio_hot_title">流行电台</string>
+    <string name="radio_hot_subtitle">POPULAR</string>
+
+    <!--################## 播放详情页 ####################-->
+    <string name="music_fav">收藏专题,并对其进行评价吧！</string>
+    <string name="music_unfav">确定取消收藏吗？</string>
+    <string name="music_share_cover">share_cover</string>
+    <string name="music_more">MORE</string>
+    <string name="music_message_error">歌曲信息错误</string>
+    <string name="music_more_title">更多</string>
+    <string name="music_player">音乐播放器</string>
+    <string name="music_mode_single">单曲播放</string>
+    <string name="music_mode_random">随机播放</string>
+    <string name="music_mode_cycle">循环播放</string>
+    <string name="music_explore_title">发现歌曲</string>
+    <string name="music_explore_wait">正在为你搜索歌曲,请稍候…</string>
+    <string name="music_explore_fail">获取歌曲失败,请重试…</string>
+    <string name="music_playlist_next_null">没有正在播放的歌曲队列</string>
+    <string name="music_playlist_album_fail">无法获取歌曲专辑信息</string>
+    <string name="music_playlist_album">正在获取专辑信息…</string>
+
+    <!--################## 本地歌曲 ####################-->
+    <string name="local_library">本地歌曲</string>
+    <string name="local_music_fragment_title">歌曲</string>
+    <string name="local_album_fragment_title">专辑</string>
+    <string name="local_artist_fragment_title">艺术家</string>
+
+    <string name="menu_song_play">播放</string>
+    <string name="menu_song_addto_playlist">添加到播放列表</string>
+    <string name="menu_song_addto_fav">添加到收藏夹</string>
+    <string name="menu_song_goto_parent">专辑详情</string>
+    <string name="menu_song_download">下载</string>
+    <string name="menu_song_delete">删除</string>
+
     <!--################## 歌单分类 ####################-->
     <string name="collect">歌单</string>
     <string name="collect_recently_title">最近播放</string>
@@ -38,15 +89,25 @@
     <string name="collection_dialog_name">收藏夹名称</string>
     <string name="collection_dialog_update_title">收藏夹</string>
     <string name="collection_dialog_update_content">要保存更改的内容吗</string>
-    <string name="confirm">确定</string>
-    <string name="menu_collection_store">保存</string>
 
-    <string name="menu_song_play">播放</string>
-    <string name="menu_song_addto_playlist">添加到播放列表</string>
-    <string name="menu_song_addto_fav">添加到收藏夹</string>
-    <string name="menu_song_goto_parent">专辑详情</string>
-    <string name="menu_song_download">下载</string>
-    <string name="menu_song_delete">删除</string>
+    <string name="collect_song_success">歌曲收藏成功</string>
+    <string name="collect_song_fail">歌曲收藏失败</string>
+
+    <!--################## 通用 ####################-->
+    <string name="fav">收藏</string>
+    <string name="confirm">确定</string>
+    <string name="evaluation">评价</string>
+    <string name="song">%1$d首</string>
+    <string name="menu_collection_edit">编辑收藏夹信息</string>
+    <string name="menu_collection_delete">删除收藏夹</string>
+
+    <string name="menu_favourite_all">全部</string>
+    <string name="menu_favourite_album">专辑</string>
+    <string name="menu_favourite_radio">电台</string>
+
+    <string name="menu_clearall">清空播放列表</string>
+
+    <string name="menu_collection_store">保存</string>
 
     <string name="queue_is_empty">播放队列为空</string>
     <string name="random_play">随机播放</string>
@@ -72,4 +133,5 @@
     <string name="fire">确定</string>
 
     <string name="next_play">已加入下一首播放</string>
+
 </resources>

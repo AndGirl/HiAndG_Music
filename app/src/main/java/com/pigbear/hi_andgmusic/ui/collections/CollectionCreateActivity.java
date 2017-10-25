@@ -74,10 +74,10 @@ public class CollectionCreateActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.actionbar_back);
-        if(getIntent() != null) {
-            cid = getIntent().getIntExtra("cid",-1);
+        if (getIntent() != null) {
+            cid = getIntent().getIntExtra("cid", -1);
             position = getIntent().getIntExtra("position", -2);
-            if(cid == -1) {
+            if (cid == -1) {
                 actionBar.setTitle(R.string.collection_create_title);
             }
         }
@@ -85,13 +85,13 @@ public class CollectionCreateActivity extends AppCompatActivity {
 
     private void initData() {
         hasChange = false;
-        if(cid != -1) {
+        if (cid != -1) {
             collectionBean = CollectionManager.getInstance().getCollectionById(cid);
             collectionCover.setImageURI(Uri.parse(collectionBean.getCoverUrl()));
             collectionTitle.setText(collectionBean.getTitle());
             collectionDes.setText(collectionBean.getDescription());
-        }else{
-            collectionBean = new CollectionBean(-1,getString(R.string.collection_title_default),"",0,"");
+        } else {
+            collectionBean = new CollectionBean(-1, getString(R.string.collection_title_default), "", 0, "");
         }
 
         collectionDes.addTextChangedListener(new TextWatcher() {
@@ -125,7 +125,7 @@ public class CollectionCreateActivity extends AppCompatActivity {
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View itemView, int position, CharSequence text) {
-                                switch (position){
+                                switch (position) {
                                     case 0:
                                         photoUtil.takePhoto();
                                         break;
@@ -210,15 +210,15 @@ public class CollectionCreateActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }
-        if(item.getItemId() == R.id.action_store) {
-            if(position == -2) {
+        if (item.getItemId() == R.id.action_store) {
+            if (position == -2) {
                 CollectionManager.getInstance().setCollection(collectionBean);
-            }else{
-                CollectionManager.getInstance().setCollection(collectionBean,position);
+            } else {
+                CollectionManager.getInstance().setCollection(collectionBean, position);
             }
             finish();
         }
@@ -234,11 +234,13 @@ public class CollectionCreateActivity extends AppCompatActivity {
                 .negativeText(R.string.cancel)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    public void onClick(@NonNull final MaterialDialog dialog, @NonNull DialogAction which) {
                         CollectionManager.getInstance().setCollection(collectionBean);
+                        //发送消息
                         RxBus.getDefault().post(new CollectionUpdateEvent(true));
                         dialog.dismiss();
                         finish();
+
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -248,5 +250,11 @@ public class CollectionCreateActivity extends AppCompatActivity {
                         finish();
                     }
                 }).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

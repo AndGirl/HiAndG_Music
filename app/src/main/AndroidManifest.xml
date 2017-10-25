@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.pigbear.hi_andgmusic"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          tools:ignore="MissingLeanbackLauncher">
 
+    <uses-feature android:name="android.software.leanback" android:required="false"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -20,8 +23,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.music.activity.MainActivity"/>
         <activity
-            android:name=".ui.music.activity.WelcomeActivity"
-            android:theme="@style/AppTheme.Full">
+            android:name=".ui.music.activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -29,8 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.guide.GuideActivity"
-            android:theme="@style/AppTheme.Full"/>
+            android:name=".ui.guide.GuideActivity"/>
         <activity
             android:name=".ui.music.activity.LocalMusicActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
@@ -54,8 +55,14 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.music.activity.RecentPlayListActivity"/>
-        <activity android:name=".ui.collections.CollectionCreateActivity">
+        <activity
+            android:name=".ui.music.activity.RecentPlayListActivity"/>
+        <activity
+            android:name=".ui.collections.CollectionCreateActivity">
+        </activity>
+        <activity android:name=".ui.music.activity.MoeDetaiActivity">
+        </activity>
+        <activity android:name=".ui.collections.CollectionPlayActivity">
         </activity>
     </application>
 

@@ -37,7 +37,7 @@ public class RxBus {
     /**
      * 根据传递的 eventType 类型返回特定类型的(eventType)的 被观察者
      */
-    private <T> Observable<T> toObservable(Class<T> eventType) {
+    public  <T> Observable<T> toObservable(Class<T> eventType) {
         return mBus.ofType(eventType);
     }
 
