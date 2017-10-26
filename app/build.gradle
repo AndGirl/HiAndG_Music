@@ -54,6 +54,7 @@ dependencies {
     compile rootProject.ext.libPercent
     compile rootProject.ext.libMaterialdesigndialog
     compile rootProject.ext.libMateriaCoreDialog
+    compile rootProject.ext.libLoggingInterceptor
     compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }

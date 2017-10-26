@@ -60,6 +60,7 @@ project.ext {
     libPercent = "com.android.support:percent:23.3.0"
     libMaterialdesigndialog = "com.lb:materialdesigndialog:1.0.0"
     libMateriaCoreDialog = "com.afollestad.material-dialogs:core:0.9.0.2"
+    libLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:3.1.2"
 }
 
 task clean(type: Delete) {
