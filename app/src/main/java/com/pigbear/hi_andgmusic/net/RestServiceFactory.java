@@ -63,9 +63,9 @@ public class RestServiceFactory {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(build)
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(baseUrl)
                 .build();
 
 

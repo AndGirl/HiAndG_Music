@@ -99,7 +99,7 @@ public class BottomFragment extends BaseFragment implements OnSongChangeListener
                 });
 
         //播放列表
-        RxView.clicks(playList).throttleFirst(2000,TimeUnit.MILLISECONDS)
+        RxView.clicks(playList).throttleFirst(2000, TimeUnit.MILLISECONDS)
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
@@ -108,7 +108,7 @@ public class BottomFragment extends BaseFragment implements OnSongChangeListener
                             public void run() {
                                 PlayQueueFragment queueFragment = new PlayQueueFragment();
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("fragment",bottomFragment);
+                                bundle.putSerializable("fragment", bottomFragment);
                                 queueFragment.setArguments(bundle);
                                 queueFragment.show(getFragmentManager(), "playqueuefragment");
                             }
@@ -221,7 +221,7 @@ public class BottomFragment extends BaseFragment implements OnSongChangeListener
     public void onDestroy() {
         super.onDestroy();
         MusicPlayManager.getInstance().unRegisterListener(this);
-        if(handler != null) {
+        if (handler != null) {
             handler.removeCallbacksAndMessages(null);
         }
     }

@@ -1,5 +1,6 @@
 package com.pigbear.hi_andgmusic.ui.local;
 
+import com.pigbear.hi_andgmusic.data.AlbumInfo;
 import com.pigbear.hi_andgmusic.data.Song;
 
 import java.util.List;
@@ -19,7 +20,8 @@ public interface ILocalView {
 
     //专辑
     interface  LocalAlbum{
-
+        void getLocalAlbumSuccess(List<AlbumInfo> albums);
+        void getLocalAlbumFail(Throwable throwable);
     }
     //歌手
     interface  LocalArtist{

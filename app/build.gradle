@@ -10,6 +10,13 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
+
     }
 
     packagingOptions {
@@ -55,6 +62,14 @@ dependencies {
     compile rootProject.ext.libMaterialdesigndialog
     compile rootProject.ext.libMateriaCoreDialog
     compile rootProject.ext.libLoggingInterceptor
+    compile rootProject.ext.libOkhttp
+    compile rootProject.ext.libOkhttpLoggging
+    compile rootProject.ext.libCardView
+    compile rootProject.ext.libPalette
+    compile rootProject.ext.libNineAndroid
+    compile files('libs/pinyin4j-2.5.0.jar')
+    //noinspection GradleCompatible
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.github.promeg:tinypinyin:1.0.0'
     testCompile 'junit:junit:4.12'
 }

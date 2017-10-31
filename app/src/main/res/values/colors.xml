@@ -32,5 +32,7 @@
     <color name="white_text">#fafafa</color>
     <color name="test_color">#696969</color>
     <color name="theme_color_PrimaryAccent">#ffce3d3e</color>
+    <color name="listTextColor">#ff333333</color>
+    <color name="listSubTextColor">#ff888888</color>
 
 </resources>

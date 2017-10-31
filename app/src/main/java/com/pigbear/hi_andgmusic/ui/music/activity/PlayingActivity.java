@@ -20,12 +20,15 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
 import com.pigbear.hi_andgmusic.R;
-import com.pigbear.hi_andgmusic.common.ImageUtils;
+import com.pigbear.hi_andgmusic.common.RxBus;
 import com.pigbear.hi_andgmusic.data.Song;
+import com.pigbear.hi_andgmusic.event.PlayingUpdateEvent;
 import com.pigbear.hi_andgmusic.service.MusicPlayManager;
 import com.pigbear.hi_andgmusic.service.OnSongChangeListener;
+import com.pigbear.hi_andgmusic.ui.adapter.FragmentAdapter;
 import com.pigbear.hi_andgmusic.ui.listing.PlayQueueFragment;
 import com.pigbear.hi_andgmusic.ui.play.MusicRecentPlayList;
+import com.pigbear.hi_andgmusic.ui.widget.CustomerViewPager;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -39,14 +42,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 
-public class PlayingActivity extends AppCompatActivity implements OnSongChangeListener,Serializable{
+public class PlayingActivity extends AppCompatActivity implements OnSongChangeListener, Serializable {
 
     @Bind(R.id.albumArt)
     ImageView albumArt;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.coverImage)
-    ImageView coverImage;
+//    @Bind(R.id.coverImage)
+//    ImageView coverImage;
     @Bind(R.id.view_line)
     View viewLine;
     @Bind(R.id.needle)
@@ -87,11 +90,15 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
     ImageView playingNext;
     @Bind(R.id.playing_playlist)
     ImageView playingPlaylist;
+    @Bind(R.id.view_pager)
+    CustomerViewPager viewPager;
     private Song song;
     private boolean isLocalMusic;
 
     private Handler handler = new Handler();
     private PlayingActivity playingActivity;
+    private FragmentAdapter fAdapter;
+    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +114,11 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
 
         initToolBar();
         initData();
+        initViewPager();
         updateProgress();
         updateData();
 
-        RxView.clicks(playingPlaylist).throttleFirst(2000,TimeUnit.MILLISECONDS)
+        RxView.clicks(playingPlaylist).throttleFirst(2000, TimeUnit.MILLISECONDS)
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
@@ -119,7 +127,7 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
                             public void run() {
                                 PlayQueueFragment queueFragment = new PlayQueueFragment();
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("PlayingActivity",playingActivity);
+                                bundle.putSerializable("PlayingActivity", playingActivity);
                                 queueFragment.setArguments(bundle);
                                 queueFragment.show(getSupportFragmentManager(), "playqueuefragment");
                             }
@@ -129,6 +137,15 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        if(fAdapter != null && isFirst) {
+//            RxBus.getDefault().post(new PlayingUpdateEvent(true));
+//            isFirst = false;
+//        }
+    }
+
     private void initToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -136,14 +153,14 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
 
     private void initData() {
         song = MusicPlayManager.getInstance().getPlayingSong();
-        if(song == null) {
+        if (song == null) {
             finish();
         }
 
         playSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(fromUser) {
+                if (fromUser) {
                     MusicPlayManager.getInstance().seekTo(progress);
                 }
             }
@@ -156,9 +173,9 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 Log.e("TAG", "拖拽完成");
-                if(MusicPlayManager.getInstance().getMediaPlayer().isPlaying()) {//正在播放歌曲
+                if (MusicPlayManager.getInstance().getMediaPlayer().isPlaying()) {//正在播放歌曲
                     MusicPlayManager.getInstance().getmService().setState(PlaybackStateCompat.STATE_PLAYING);
-                }else{
+                } else {
                     MusicPlayManager.getInstance().play();
                     playingPlay.setImageResource(R.drawable.play_rdi_btn_pause);
                 }
@@ -168,10 +185,18 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
     }
 
     /**
+     * 初始化ViewPager
+     */
+    private void initViewPager() {
+        fAdapter = new FragmentAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(fAdapter);
+    }
+
+    /**
      * 更新进度条，进度显示，歌曲长度
      */
     private void updateProgress() {
-        Observable.interval(0,1000, TimeUnit.MILLISECONDS)
+        Observable.interval(0, 1000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
                     @Override
@@ -190,26 +215,32 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
      * 更新数据：封面，标题，图标
      */
     private void updateData() {
-        //歌曲的封面
-        String coverUrl = song.getCoverUrl();
-        ImageUtils.GlideWith(this,coverUrl,R.drawable.ah1,coverImage);
+        //歌曲背景的封面
+//        String coverUrl = song.getCoverUrl();
+//        ImageUtils.GlideWith(this, coverUrl, R.drawable.ah1, coverImage);
+
+        fAdapter.notifyDataSetChanged();
 
         //设置标题
-        if(!TextUtils.isEmpty(song.getAlbumName())) {
+        if (!TextUtils.isEmpty(song.getAlbumName())) {
             String title = song.getAlbumName();
             Spanned fromHtml = Html.fromHtml(title);
             getSupportActionBar().setTitle(fromHtml);
         }
         toolbar.setTitle(song.getTitle());
 
-        if(MusicPlayManager.getInstance().getPlayingSong() != null) {
-            playingPlay.setImageResource(R.drawable.play_rdi_btn_pause);
+        if (MusicPlayManager.getInstance().getPlayingSong() != null) {
+            if(MusicPlayManager.getInstance().isPlaying()) {//正在播放
+                playingPlay.setImageResource(R.drawable.play_rdi_btn_pause);
+            }else{//暂停
+                playingPlay.setImageResource(R.drawable.play_rdi_btn_play);
+            }
             //添加歌曲
-            if(isLocalMusic) {//最近播放列表进入
+            if (isLocalMusic) {//最近播放列表进入
                 MusicRecentPlayList.getInstance().addPlaySong(song);
             }
         }
-
+        Log.e("TAG", "=====" + MusicPlayManager.getInstance().getMusicPlaylist());
     }
 
     @Override
@@ -241,10 +272,11 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
                 MusicPlayManager.getInstance().playPre();
                 break;
             case R.id.playing_play://播放
-                if(MusicPlayManager.getInstance().getState() == PlaybackStateCompat.STATE_PLAYING){
+                if (MusicPlayManager.getInstance().getState() == PlaybackStateCompat.STATE_PLAYING) {
                     MusicPlayManager.getInstance().playPause();
                     playingPlay.setImageResource(R.drawable.play_rdi_btn_play);
-                }else if(MusicPlayManager.getInstance().getState() == PlaybackStateCompat.STATE_PAUSED){
+                    RxBus.getDefault().post(new PlayingUpdateEvent(false));
+                } else if (MusicPlayManager.getInstance().getState() == PlaybackStateCompat.STATE_PAUSED) {
                     MusicPlayManager.getInstance().play();
                     playingPlay.setImageResource(R.drawable.play_rdi_btn_pause);
                 }
@@ -269,7 +301,7 @@ public class PlayingActivity extends AppCompatActivity implements OnSongChangeLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home :
+            case android.R.id.home:
                 onBackPressed();
                 break;
         }

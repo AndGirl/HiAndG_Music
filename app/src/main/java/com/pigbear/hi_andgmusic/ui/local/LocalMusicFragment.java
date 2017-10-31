@@ -37,6 +37,8 @@ public class LocalMusicFragment extends BaseFragment implements ILocalView.Local
     private LocalMusicPresenter mLibraryPresenter;
     private MusicPlayList musicPlayList;
 
+    private int currentPosition = -1;//当前文件
+
     public LocalMusicFragment() {
         // Required empty public constructor
     }
@@ -76,6 +78,7 @@ public class LocalMusicFragment extends BaseFragment implements ILocalView.Local
         mAdapter.setItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(Object item, int position) {
+                setCurrentPosition(position);
                 if (musicPlayList.getQueue().size() == 0) {//清空数据后
                     musicPlayList.setQueue(mAdapter.getSongs());
                 }
@@ -108,9 +111,26 @@ public class LocalMusicFragment extends BaseFragment implements ILocalView.Local
     @Override
     public void getLocalMusicSuccess(List<Song> songs) {
         //获取到本地音乐
-        musicPlayList.setQueue(songs);
+        if(MusicPlayManager.getInstance().getPlayingSong() != null) {//底部状态栏有歌曲的时候调用
+            int indexOf = MusicPlayManager.getInstance().getMusicPlaylist().getQueue().indexOf(MusicPlayManager.getInstance().getPlayingSong());
+            setCurrentPosition(indexOf);
+        }
+
+        musicPlayList.setQueue(songs,getCurrentPosition());
         musicPlayList.setTitle("本地歌曲");
         mAdapter.setData(songs);
+    }
+
+    /**
+     * 设置当前播放位置
+     * @param currentPosition
+     */
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
+    public int getCurrentPosition() {
+        return currentPosition;
     }
 
     @Override

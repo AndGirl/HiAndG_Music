@@ -10,6 +10,7 @@ import com.bilibili.magicasakura.widgets.TintToolbar;
 import com.pigbear.hi_andgmusic.R;
 import com.pigbear.hi_andgmusic.common.ACache;
 import com.pigbear.hi_andgmusic.data.Song;
+import com.pigbear.hi_andgmusic.service.MusicPlayManager;
 import com.pigbear.hi_andgmusic.ui.adapter.LocalMusicAdapter;
 
 import butterknife.Bind;
@@ -30,16 +31,19 @@ public class LocalMusicActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(getFragment() != null) {
-            Object asObject = ACache.get(this, "bottomFragment").getAsObject("bottomFragment");
-            if(asObject != null && asObject instanceof Song) {
-                song = (Song) asObject;
-                getFragment().setSong(song);
-                getFragment().updateData();
-            }else{
-                getFragment().initData();
+        if(MusicPlayManager.getInstance().getPlayingSong() != null) {
+            if(getFragment() != null) {
+                Object asObject = ACache.get(this, "bottomFragment").getAsObject("bottomFragment");
+                if(asObject != null && asObject instanceof Song) {
+                    song = (Song) asObject;
+                    getFragment().setSong(song);
+                    getFragment().updateData();
+                }else{
+                    getFragment().initData();
+                }
             }
         }
+
 
     }
 

@@ -18,22 +18,22 @@ package com.pigbear.hi_andgmusic.net;
 import com.pigbear.hi_andgmusic.data.AlbumInfo;
 import com.pigbear.hi_andgmusic.data.ArtistInfo;
 
-import retrofit2.Callback;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 public interface LastFmRestService {
 
-    String BASE_PARAMETERS_ALBUM = "/?method=album.getinfo&api_key=fdb3a51437d4281d4d64964d333531d4&format=json";
-    String BASE_PARAMETERS_ARTIST = "/?method=artist.getinfo&api_key=fdb3a51437d4281d4d64964d333531d4&format=json";
+    String BASE_PARAMETERS_ALBUM = "?method=album.getinfo&api_key=fdb3a51437d4281d4d64964d333531d4&format=json";
+    String BASE_PARAMETERS_ARTIST = "?method=artist.getinfo&api_key=fdb3a51437d4281d4d64964d333531d4&format=json";
 
     @Headers("Cache-Control: public")
     @GET(BASE_PARAMETERS_ALBUM)
-    void getAlbumInfo(@Query("artist") String artist, @Query("album") String album, Callback<AlbumInfo> callback);
+    Call<AlbumInfo> getAlbumInfo(@Query("artist") String artist, @Query("album") String album);
 
     @Headers("Cache-Control: public")
     @GET(BASE_PARAMETERS_ARTIST)
-    void getArtistInfo(@Query("artist") String artist, Callback<ArtistInfo> callback);
+    Call<ArtistInfo> getArtistInfo(@Query("artist") String artist);
 
 }

@@ -38,6 +38,18 @@ public class MusicPlayList {
     }
 
     /**
+     * 带位置的队列
+     * @param songs
+     * @param currentPosition
+     */
+    public void setQueue(List<Song> songs, int currentPosition) {
+        this.queue = songs;
+        if(currentPosition >= 0) {
+            setCurrentPlay(currentPosition);
+        }
+    }
+
+    /**
      * 设置当前播放歌曲
      * @param position
      * @return
@@ -154,5 +166,6 @@ public class MusicPlayList {
         queue.clear();
         curSong = null;
     }
+
 
 }

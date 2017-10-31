@@ -5,7 +5,9 @@ import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.support.v4.media.session.PlaybackStateCompat;
 
+import com.pigbear.hi_andgmusic.common.RxBus;
 import com.pigbear.hi_andgmusic.data.Song;
+import com.pigbear.hi_andgmusic.event.PlayingUpdateEvent;
 import com.pigbear.hi_andgmusic.ui.play.MusicPlayList;
 
 import java.io.IOException;
@@ -92,6 +94,13 @@ public class MusicPlayManager implements MediaPlayer.OnPreparedListener, MediaPl
         play(mMusicPlaylist.getCurrentPlay());
     }
 
+    public boolean isPlaying(){
+        if(mService.getState() == PlaybackStateCompat.STATE_PLAYING) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * 直接播放
      */
@@ -127,6 +136,9 @@ public class MusicPlayManager implements MediaPlayer.OnPreparedListener, MediaPl
                 e.printStackTrace();
             }
         }
+
+        RxBus.getDefault().post(new PlayingUpdateEvent(true));
+
     }
 
     private void createMediaPlayerIfNeed() {

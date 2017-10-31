@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pigbear.hi_andgmusic.R;
+import com.pigbear.hi_andgmusic.common.RxBus;
 import com.pigbear.hi_andgmusic.data.CollectionBean;
+import com.pigbear.hi_andgmusic.event.CollectionUpdateEvent;
 import com.pigbear.hi_andgmusic.ui.adapter.CollectionAdapter;
 import com.pigbear.hi_andgmusic.ui.adapter.OnItemClickListener;
 import com.pigbear.hi_andgmusic.ui.collections.CollectionCreateActivity;
@@ -25,6 +27,7 @@ import com.pigbear.hi_andgmusic.ui.music.activity.RecentPlayListActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +43,15 @@ public class LocalFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.e("TAG", "Fragment + onResume()");
-        collectionAdapter.update();
+        //collectionAdapter.update();
+        RxBus.getDefault().register(this, CollectionUpdateEvent.class, new Consumer<CollectionUpdateEvent>() {
+            @Override
+            public void accept(CollectionUpdateEvent collectionUpdateEvent) throws Exception {
+                Log.e("TAG", "执行订阅了");
+                collectionAdapter.update();
+            }
+        });
+
     }
 
     public LocalFragment() {
@@ -122,9 +133,11 @@ public class LocalFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        RxBus.getDefault().unRegister(this);
     }
 }

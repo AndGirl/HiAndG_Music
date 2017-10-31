@@ -25,6 +25,7 @@ import com.bilibili.magicasakura.widgets.TintToolbar;
 import com.pigbear.hi_andgmusic.R;
 import com.pigbear.hi_andgmusic.common.ACache;
 import com.pigbear.hi_andgmusic.data.Song;
+import com.pigbear.hi_andgmusic.service.MusicPlayManager;
 import com.pigbear.hi_andgmusic.ui.album.AlbumFragment;
 import com.pigbear.hi_andgmusic.ui.local.LocalFragment;
 import com.pigbear.hi_andgmusic.ui.radio.RadioFragment;
@@ -69,6 +70,7 @@ public class MainActivity extends BaseActivity {
 
         getWindow().setBackgroundDrawableResource(R.color.background_material_light_1);
 
+
         ButterKnife.bind(this);
         setToolBar();
         setCustomeViewPager();
@@ -78,14 +80,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(getFragment() != null) {
-            Object asObject = ACache.get(this, "bottomFragment").getAsObject("bottomFragment");
-            if(asObject != null && asObject instanceof Song) {
-                song = (Song) asObject;
-                getFragment().setSong(song);
-                getFragment().updateData();
-            }else{//加载默认图片
-                getFragment().initData();
+        if(MusicPlayManager.getInstance().getPlayingSong() != null) {
+            if(getFragment() != null) {
+                Object asObject = ACache.get(this, "bottomFragment").getAsObject("bottomFragment");
+                if(asObject != null && asObject instanceof Song) {
+                    song = (Song) asObject;
+                    getFragment().setSong(song);
+                    getFragment().updateData();
+                }else{//加载默认图片
+                    getFragment().initData();
+                }
             }
         }
     }

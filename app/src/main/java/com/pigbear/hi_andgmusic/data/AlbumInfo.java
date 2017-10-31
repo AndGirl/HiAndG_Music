@@ -18,14 +18,21 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class AlbumInfo implements Parcelable {
+import com.google.gson.annotations.SerializedName;
 
+
+public class AlbumInfo implements Parcelable {
     public static final String KEY_ALBUM_NAME = "album_name";
     public static final String KEY_ALBUM_ID = "album_id";
     public static final String KEY_NUMBER_OF_SONGS = "number_of_songs";
     public static final String KEY_ALBUM_ART = "album_art";
     public static final String KEY_ALBUM_ARTIST = "album_artist";
     public static final String KEY_ALBUM_SORT = "album_sort";
+
+    private static final String ALBUM = "album";
+
+    @SerializedName(ALBUM)
+    public LastfmAlbum mAlbum;
 
     //专辑名称
     public String album_name;

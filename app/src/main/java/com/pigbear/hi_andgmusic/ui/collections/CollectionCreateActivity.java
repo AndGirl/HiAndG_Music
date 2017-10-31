@@ -220,6 +220,7 @@ public class CollectionCreateActivity extends AppCompatActivity {
             } else {
                 CollectionManager.getInstance().setCollection(collectionBean, position);
             }
+            RxBus.getDefault().post(new CollectionUpdateEvent(true));
             finish();
         }
         return super.onOptionsItemSelected(item);

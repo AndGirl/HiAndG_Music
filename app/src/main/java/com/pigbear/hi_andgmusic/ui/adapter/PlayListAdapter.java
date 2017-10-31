@@ -74,7 +74,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.PlayLi
         } else {
             holder.MusicName.setTextColor(context.getResources().getColor(R.color.black_normal));
         }
-        if (MusicPlayManager.getInstance().getPlayingSong().getId() == song.getId()) {
+        if (MusicPlayManager.getInstance().getPlayingSong().getId() == songs.get(position).getId()) {
             holder.playstate.setVisibility(View.VISIBLE);
             holder.playstate.setImageResource(R.drawable.song_play_icon);
             holder.playstate.setImageTintList(R.color.theme_color_primary);

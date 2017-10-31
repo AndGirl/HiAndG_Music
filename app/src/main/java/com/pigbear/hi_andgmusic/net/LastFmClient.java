@@ -15,11 +15,13 @@
 package com.pigbear.hi_andgmusic.net;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.pigbear.hi_andgmusic.data.AlbumInfo;
 import com.pigbear.hi_andgmusic.data.AlbumQuery;
 import com.pigbear.hi_andgmusic.data.ArtistInfo;
 import com.pigbear.hi_andgmusic.data.ArtistQuery;
+import com.pigbear.hi_andgmusic.net.callbacks.AlbuminfoListener;
 import com.pigbear.hi_andgmusic.net.callbacks.ArtistInfoListener;
 
 import retrofit2.Call;
@@ -29,7 +31,7 @@ import retrofit2.Response;
 
 public class LastFmClient {
 
-    public static final String BASE_API_URL = "http://ws.audioscrobbler.com/2.0";
+    public static final String BASE_API_URL = "http://ws.audioscrobbler.com/2.0/";
     private static final Object sLock = new Object();
     private static LastFmClient sInstance;
     private LastFmRestService mRestService;
@@ -50,9 +52,10 @@ public class LastFmClient {
      * @param listener
      */
     public void getArtistInfo(ArtistQuery artistQuery, final ArtistInfoListener listener){
-        mRestService.getArtistInfo(artistQuery.mArtist, new Callback<ArtistInfo>() {
+        mRestService.getArtistInfo(artistQuery.mArtist).enqueue(new Callback<ArtistInfo>() {
             @Override
             public void onResponse(Call<ArtistInfo> call, Response<ArtistInfo> response) {
+                Log.e("TAG", "response + " + response.body());
                 listener.artistInfoSucess(response.body().mArtist);
             }
 
@@ -60,23 +63,29 @@ public class LastFmClient {
             public void onFailure(Call<ArtistInfo> call, Throwable t) {
                 listener.artistInfoFailed();
             }
-
         });
 
     }
 
-    public void getAlbumInfo(AlbumQuery albumQuery){
-        mRestService.getAlbumInfo(albumQuery.mALbum, albumQuery.mALbum, new Callback<AlbumInfo>() {
+    /**
+     * 获取专辑信息
+     * @param albumQuery
+     * @param listener
+     */
+    public void getAlbumInfo(AlbumQuery albumQuery,final AlbuminfoListener listener){
+
+        mRestService.getAlbumInfo(albumQuery.mArtist, albumQuery.mALbum).enqueue(new Callback<AlbumInfo>() {
             @Override
             public void onResponse(Call<AlbumInfo> call, Response<AlbumInfo> response) {
-
+                listener.albumInfoSucess(response.body().mAlbum);
             }
 
             @Override
             public void onFailure(Call<AlbumInfo> call, Throwable t) {
-
+                listener.albumInfoFailed();
             }
         });
+
     }
 
 

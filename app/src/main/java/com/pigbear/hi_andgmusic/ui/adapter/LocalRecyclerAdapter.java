@@ -64,6 +64,18 @@ public class LocalRecyclerAdapter extends RecyclerView.Adapter<LocalRecyclerAdap
             holder.detail.setText(song.getArtistName());
         }
 
+//        if (MusicPlayManager.getInstance().getState() == PlaybackStateCompat.STATE_PLAYING ||
+//                MusicPlayManager.getInstance().getState() == PlaybackStateCompat.STATE_PAUSED) {
+//            if (MusicPlayManager.getInstance().getMusicPlaylist().getCurrentPlay() != null &&
+//                    song.getId() == MusicPlayManager.getInstance().getPlayingSong().getId()) {
+//                holder.playstate.setVisibility(View.VISIBLE);
+//                holder.playstate.setImageResource(R.drawable.song_play_icon);
+//                holder.playstate.setImageTintList(R.color.theme_color_primary);
+//            } else {
+//                holder.playstate.setVisibility(View.GONE);
+//            }
+//        }
+
         //解析图片
         Glide.with(context)
                 .load(song.getCoverUrl())
@@ -90,6 +102,7 @@ public class LocalRecyclerAdapter extends RecyclerView.Adapter<LocalRecyclerAdap
         public TextView title, detail;
         public ImageView cover;
         public AppCompatImageView setting;
+        //public TintImageView playstate;
 
         public LocalMusicViewHolder(View itemView) {
             super(itemView);
@@ -98,6 +111,7 @@ public class LocalRecyclerAdapter extends RecyclerView.Adapter<LocalRecyclerAdap
             detail = (TextView) itemView.findViewById(R.id.local_song_detail);
             cover = (ImageView) itemView.findViewById(R.id.local_song_cover);
             setting = (AppCompatImageView) itemView.findViewById(R.id.local_song_setting);
+            //playstate = (TintImageView) itemView.findViewById(R.id.play_state);
             setting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -113,7 +127,7 @@ public class LocalRecyclerAdapter extends RecyclerView.Adapter<LocalRecyclerAdap
                     .subscribe(new Consumer<Object>() {
                         @Override
                         public void accept(Object o) throws Exception {
-                            if(songs.size() == 0) {
+                            if (songs.size() == 0) {
                                 songs = LocalMusicLibrary.getAllSongs(context);
                                 //setData(songs);
                             }

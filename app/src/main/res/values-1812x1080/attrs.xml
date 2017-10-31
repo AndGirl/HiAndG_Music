@@ -7,4 +7,7 @@
         <attr name="loadMoreEnabled" format="boolean" />
         <attr name="refreshFinalMoveOffset" format="dimension" />
     </declare-styleable>
+
+    <item name="tag_animator" type="id" />
+
 </resources>

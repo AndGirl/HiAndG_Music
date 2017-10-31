@@ -26,6 +26,7 @@
         android:src="@drawable/ic_more_vert" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/local_song_setting"
@@ -57,7 +58,21 @@
 
     </LinearLayout>
 
+    <!--<com.bilibili.magicasakura.widgets.TintImageView-->
+        <!--android:id="@+id/play_state"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/song_play_icon"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginRight="@dimen/x8"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_above="@+id/view"-->
+        <!--android:layout_toRightOf="@+id/linearLayout"-->
+        <!--android:layout_toEndOf="@+id/linearLayout"-->
+        <!--/>-->
+
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
